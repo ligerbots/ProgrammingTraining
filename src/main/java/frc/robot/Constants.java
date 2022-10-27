@@ -26,16 +26,12 @@ public final class Constants {
     public static final double kvVoltSecondsPerMeter = 2.3;
     public static final double kaVoltSecondsSquaredPerMeter = 0.0917;
 
-    public static final double kDriveGearRatio = 8.16;
-
     public static final double kP = 1.0;
     public static final double kI = 0.0;
     public static final double kD = 0.0;
 
     // Feedforward constants
     public static final double kS = 0.182;
-    // The following constants are computed from https://www.reca.lc/arm
-    public static final double kG = 1.19;
     public static final double kV = 7.67;
     public static final double kA = 0.19;
 
