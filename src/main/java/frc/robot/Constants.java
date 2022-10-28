@@ -17,4 +17,6 @@ public final class Constants {
     public static final int MOTOR_ID = 1;
 
     public static final int[] ENCODER_PORT = {2, 3};
+
+    public static final double ENCODER_DISTANCE_PER_PULSE = 0.5*Math.PI / 2048;
 }

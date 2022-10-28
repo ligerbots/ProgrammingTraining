@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -17,6 +19,10 @@ public class Motor extends SubsystemBase {
 
   Encoder m_encoder = new Encoder(Constants.ENCODER_PORT[0], Constants.ENCODER_PORT[1]);
 
+  PIDController m_motorController = new PIDController(1, 0, 0);
+
+  SimpleMotorFeedforward m_feedForward = new SimpleMotorFeedforward(0, 0);
+
   /** Creates a new Motor. */
   public Motor() {
     m_encoder.setDistancePerPulse(Constants.ENCODER_DISTANCE_PER_PULSE);
@@ -25,5 +31,15 @@ public class Motor extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    
+  }
+
+  public double getDistance(){
+    return m_encoder.getDistance();
+  }
+
+  public void drive(double volt){
+    volt = m_feedForward.calculate(volt) + m_motorController.calculate(m_encoder.getRate(), volt);
+    m_motor.setVoltage(volt);
   }
 }
