@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.util.Units;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -12,4 +15,24 @@ package frc.robot;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
-public final class Constants {}
+public final class Constants {
+
+        // Following four CAN IDs are for the drivetrain subsystem
+        public static final int LEADER_LEFT_CAN_ID = 12;
+        public static final int LEADER_RIGHT_CAN_ID = 8;
+        public static final int FOLLOWER_LEFT_CAN_ID = 9; 
+        public static final int FOLLOWER_RIGHT_CAN_ID = 11;
+
+        public static final DCMotor kDriveGearbox = DCMotor.getFalcon500(2);
+        public static final double kDriveGearing = 10.125;
+        public static final double kWheelDiameterMeters = Units.inchesToMeters(6.0);   // 6 inch wheels
+        public static final double FALCON_UNITS_PER_RPM = 2048.0 / 600.0;
+        public static final double DRIVE_FALCON_DISTANCE_PER_UNIT = Units.inchesToMeters(Math.PI * 6.0) / kDriveGearing / 2048.0;
+
+        
+    public static final double DRIVETRAIN_KP = 50.0; // waited to be tuned
+    public static final double DRIVETRAIN_KI = 0.0;
+    public static final double DRIVETRAIN_KD = 0.0; 
+    public static final double DRIVETRAIN_KF = 0.0;
+    
+}
