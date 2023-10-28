@@ -8,12 +8,17 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class NEOMotor extends SubsystemBase {
   private final CANSparkMax m_motor;
   private final RelativeEncoder m_encoder;  
+
+  // *Note: Neo reads a raw percentage of a full revolution [0, 1]
+  // So this conversion factor is just how much measurement unit is one full revolution
+  private final double RADIAN_PER_REVOLUTION = 2*Math.PI;
 
   /** Creates a new NEOMotor. */
   public NEOMotor() {
@@ -24,13 +29,19 @@ public class NEOMotor extends SubsystemBase {
     // assigns m_encoder to m_motor
     m_encoder = m_motor.getEncoder();
 
+    m_encoder.setPosition(0.0);
+
     // Set the position conversion factor.
-    // m_encoder.setPositionConversionFactor(1.0);
+    m_encoder.setPositionConversionFactor(RADIAN_PER_REVOLUTION);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    m_motor.set(0.5);
+    SmartDashboard.putNumber("encoderReading", Math.toDegrees(getAngle()));
+  }
+
+  private double getAngle(){
+    return m_encoder.getPosition();
   }
 }
