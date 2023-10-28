@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,6 +17,12 @@ import frc.robot.Constants;
 public class NEOMotor extends SubsystemBase {
   private final CANSparkMax m_motor;
   private final RelativeEncoder m_encoder;  
+  private final SparkMaxPIDController m_PIDController;
+
+  private static final double K_P = 0.05;
+  private static final double K_I = 0.0;
+  private static final double K_D = 0.0;
+  private static final double K_FF = 0.0;
 
   // *Note: Neo reads a raw percentage of a full revolution [0, 1]
   // So this conversion factor is just how much measurement unit is one full revolution
@@ -33,6 +41,12 @@ public class NEOMotor extends SubsystemBase {
 
     // Set the position conversion factor.
     m_encoder.setPositionConversionFactor(RADIAN_PER_REVOLUTION);
+
+    m_PIDController = m_motor.getPIDController();
+    m_PIDController.setP(K_P);
+    m_PIDController.setI(K_I);
+    m_PIDController.setD(K_D);
+    m_PIDController.setFF(K_FF);
   }
 
   @Override
@@ -47,5 +61,9 @@ public class NEOMotor extends SubsystemBase {
 
   public void setSpeed(double speed){
     m_motor.set(speed);
+  }
+
+  public void setAngle(double angle){
+    m_PIDController.setReference(angle, ControlType.kPosition, 0, K_FF); 
   }
 }

@@ -10,6 +10,7 @@ import frc.robot.subsystems.NEOMotor;
 public class Turn180 extends CommandBase {
   /** Creates a new Turn180. */
   private NEOMotor m_neo;
+  private final double ANGLE_TO_TURN = Math.toRadians(180.0);
   public Turn180(NEOMotor neo) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_neo = neo;
@@ -19,24 +20,22 @@ public class Turn180 extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_neo.setSpeed(0.0);
+    m_neo.setAngle(ANGLE_TO_TURN);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_neo.setSpeed(0.01);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_neo.setSpeed(0.0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_neo.getAngle() - Math.PI) <= Math.toRadians(5.0);
+    return true;  
   }
 }
