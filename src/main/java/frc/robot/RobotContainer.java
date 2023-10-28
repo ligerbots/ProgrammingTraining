@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.Turn;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.NEOMotor;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -24,6 +25,8 @@ public class RobotContainer {
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   private final NEOMotor m_neo = new NEOMotor();
+
+  private final XboxController m_controller = new XboxController(0);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -47,6 +50,35 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return m_autoCommand;
+  }
+
+  public Command getTurnCommand(){
+    return new Turn(m_neo, () -> -modifyAxis(m_controller.getRightX()/2.0));
+  }
+
+  private static double deadband(double value, double deadband) {
+    // ignore very subtle movement on joystick from rest
+    if (Math.abs(value) > deadband) {
+        if (value > 0.0) {
+            // keep the proportion correct
+            // Actual effective value / all possible effective value
+            return (value - deadband) / (1.0 - deadband);
+        } else {
+            return (value + deadband) / (1.0 - deadband);
+        }
+    } else {
+        return 0.0;
+    }
+}
+
+  private static double modifyAxis(double value) {
+      // Deadband
+      value = deadband(value, 0.05);
+
+      // Square the axis to lower sensitivity, more steady
+      value = Math.copySign(value * value, value);
+
+      return value;
   }
 
   public NEOMotor getNEOMotor(){

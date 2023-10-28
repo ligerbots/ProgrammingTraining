@@ -78,7 +78,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    new Turn180(m_robotContainer.getNEOMotor()).schedule();;
+    // new Turn180(m_robotContainer.getNEOMotor()).schedule();
+    m_robotContainer.getTurnCommand().schedule();
   }
 
   /** This function is called periodically during operator control. */
