@@ -41,7 +41,11 @@ public class NEOMotor extends SubsystemBase {
     SmartDashboard.putNumber("encoderReading", Math.toDegrees(getAngle()));
   }
 
-  private double getAngle(){
+  public double getAngle(){
     return m_encoder.getPosition();
+  }
+
+  public void setSpeed(double speed){
+    m_motor.set(speed);
   }
 }

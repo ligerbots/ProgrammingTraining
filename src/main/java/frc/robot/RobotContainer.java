@@ -23,7 +23,7 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-  private final NEOMotor m_motor = new NEOMotor();
+  private final NEOMotor m_neo = new NEOMotor();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -47,5 +47,9 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return m_autoCommand;
+  }
+
+  public NEOMotor getNEOMotor(){
+    return m_neo;
   }
 }
