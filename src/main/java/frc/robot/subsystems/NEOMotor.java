@@ -30,7 +30,6 @@ public class NEOMotor extends SubsystemBase {
     m_motor = new CANSparkMax(Constants.MOTOR_CAN_ID, MotorType.kBrushless);
     m_motor.restoreFactoryDefaults();
 
-
     // assigns m_encoder to m_motor
     m_encoder = m_motor.getEncoder();
 
