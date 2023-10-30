@@ -14,5 +14,4 @@ package frc.robot;
  */
 public final class Constants {
     // CAN ID (identifier for motor)
-    public static final int MOTOR_CAN_ID = 2;
 }
