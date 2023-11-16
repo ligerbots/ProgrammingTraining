@@ -26,6 +26,16 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+     // If you are trying to work with a running PV and simulation, enable this code.
+    // Otherwise it is not needed, even when running a simulation
+    if (isSimulation()) {
+      // At-Home Network Debug Only - host the NT server on photonvision and connect to it.
+      var ntinst = edu.wpi.first.networktables.NetworkTableInstance.getDefault();
+      ntinst.stopServer();
+      // ntinst.setServer("photonvision.local");
+      ntinst.setServer("127.0.0.1");
+      ntinst.startClient4("MainRobotProgram");
+    }
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
