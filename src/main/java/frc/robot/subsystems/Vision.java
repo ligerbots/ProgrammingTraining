@@ -20,8 +20,9 @@ public class Vision extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    findDistanceToTag();
   }
-  
+
   public void findDistanceToTag () {
     if (!m_aprilTagCamera.isConnected())
       return;
