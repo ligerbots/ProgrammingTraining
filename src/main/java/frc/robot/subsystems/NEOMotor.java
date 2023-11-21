@@ -27,6 +27,7 @@ public class NEOMotor extends SubsystemBase {
 
   public NEOMotor() {
     m_motor.restoreFactoryDefaults();
+    // test
 
     m_encoder = m_motor.getEncoder();
     
