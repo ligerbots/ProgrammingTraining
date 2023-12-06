@@ -20,7 +20,8 @@ public class Turn180 extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_neo.setAngle(ANGLE_TO_TURN);
+    // m_neo.set(ANGLE_TO_TURN);
+    m_neo.setAngleGoal(ANGLE_TO_TURN);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

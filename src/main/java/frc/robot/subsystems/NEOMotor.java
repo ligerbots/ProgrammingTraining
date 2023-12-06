@@ -10,11 +10,13 @@ import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.TrapezoidProfileSubsystem;
 import frc.robot.Constants;
 
-public class NEOMotor extends SubsystemBase {
+public class NEOMotor extends TrapezoidProfileSubsystem {
   private final CANSparkMax m_motor;
   private final RelativeEncoder m_encoder;  
   private final SparkMaxPIDController m_PIDController;
@@ -28,11 +30,17 @@ public class NEOMotor extends SubsystemBase {
   // So this conversion factor is just how much measurement unit is one full revolution
   private final double RADIAN_PER_REVOLUTION = 2*Math.PI;
 
+  static final double MAX_VEL_RADIAN_PER_SEC = Math.toRadians(120.0);
+  static final double MAX_ACC_RADIAN_PER_SEC_SQ = Math.toRadians(30.0);
+
+
   /** Creates a new NEOMotor. */
   public NEOMotor() {
+    super(new TrapezoidProfile.Constraints(MAX_VEL_RADIAN_PER_SEC, MAX_ACC_RADIAN_PER_SEC_SQ));
+
     // create motor controller Sparkmax, assign CANID to m_motor, type of motor = brushelss
     m_motor = new CANSparkMax(Constants.MOTOR_CAN_ID, MotorType.kBrushless);
-    m_motor.restoreFactoryDefaults(); 
+    m_motor.restoreFactoryDefaults();
 
     // assigns m_encoder to m_motor
     m_encoder = m_motor.getEncoder();
@@ -65,5 +73,16 @@ public class NEOMotor extends SubsystemBase {
 
   public void setAngle(double angle){
     m_PIDController.setReference(angle, ControlType.kPosition, 0, K_FF); 
+  }
+
+  @Override
+  protected void useState(State state) {
+    // TODO Auto-generated method stub
+    setAngle(state.position);
+  }
+
+  // set the angle to angles in radians
+  public void setAngleGoal(double angle){
+    super.setGoal(new State(angle, 0.0));
   }
 }
