@@ -10,7 +10,7 @@ import frc.robot.subsystems.NEOMotor;
 public class Turn360 extends CommandBase {
 
   private final NEOMotor m_neo;
-  private final double ANGLE_TO_TURN = Math.toRadians(360); //2pi
+  private final double ANGLE_TO_TURN = Math.toRadians(360*10); //2pi
 
   /** Creates a new Turn360. */
   public Turn360(NEOMotor neo) {

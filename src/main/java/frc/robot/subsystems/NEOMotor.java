@@ -27,8 +27,8 @@ public class NEOMotor extends TrapezoidProfileSubsystem{
   private static final double K_D = 0.0;
   private static final double K_FF = 0.0;
 
-  private static final double V_MAX = Math.toRadians(180.0); // rad/s
-  private static final double ACC_MAX = Math.toRadians(180.0); // rad/s^2
+  private static final double V_MAX = Math.toRadians(720.0*3); // rad/s
+  private static final double ACC_MAX = Math.toRadians(360.0*5); // rad/s^2
 
   public NEOMotor() {
     super(new Constraints(V_MAX, ACC_MAX));
@@ -66,11 +66,11 @@ public class NEOMotor extends TrapezoidProfileSubsystem{
   }
 
   public void setAngle(double angle){
-    m_PIDController.setReference(angle, ControlType.kPosition);
+    m_PIDController.setReference(angle, ControlType.kPosition, 0, K_FF); 
   }
 
   public void setAngleGoal(double angle){
-    super.setGoal(angle);
+    super.setGoal(new State(angle, 0.0));
   }
 
   @Override
