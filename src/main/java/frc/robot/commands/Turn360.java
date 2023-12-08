@@ -22,7 +22,8 @@ public class Turn360 extends CommandBase {
   @Override
   public void initialize() {
     //m_neo.setSpeed(0.02);
-    m_neo.setAngle(ANGLE_TO_TURN); // setAngle(2pi)
+    m_neo.setAngleGoal(ANGLE_TO_TURN); // setAngle(2pi)
+    System.out.println("Turn360 Command executed!!!!");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
